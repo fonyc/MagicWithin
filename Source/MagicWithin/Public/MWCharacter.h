@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "MWCharacter.generated.h"
 
+class USpringArmComponent;
+class UCameraComponent;
+
 UCLASS()
 class MAGICWITHIN_API AMWCharacter : public ACharacter
 {
@@ -16,9 +19,17 @@ public:
 	AMWCharacter();
 
 protected:
+	
+	UPROPERTY(VisibleAnywhere)
+	USpringArmComponent* SpringArmComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* CameraComponent;
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	void MoveForward(float Value);
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
