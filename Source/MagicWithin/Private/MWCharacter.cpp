@@ -50,6 +50,7 @@ void AMWCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &AMWCharacter::PrimaryAttack);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 }
 
 void AMWCharacter::MoveForward(const float Value)
@@ -75,7 +76,8 @@ void AMWCharacter::MoveRight(const float Value)
 
 void AMWCharacter::PrimaryAttack()
 {
-	const FTransform SpawnTransform = FTransform(GetControlRotation(),GetActorLocation());
+    const FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+	const FTransform SpawnTransform = FTransform(GetControlRotation(),HandLocation);
 	
 	FActorSpawnParameters SpawnParameters;
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;

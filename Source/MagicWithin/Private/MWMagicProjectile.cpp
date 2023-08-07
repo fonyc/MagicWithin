@@ -4,6 +4,7 @@
 #include "MWMagicProjectile.h"
 
 #include "Components/SphereComponent.h"
+#include "EnvironmentQuery/EnvQueryTypes.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 
@@ -14,6 +15,8 @@ AMWMagicProjectile::AMWMagicProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
+	SphereComponent->SetSphereRadius(3.0f);
+	SphereComponent->SetCollisionProfileName(TEXT("MagicProjectile"));
 	RootComponent = SphereComponent;
 
 	ParticleSystemComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ParticleSystemComp"));
