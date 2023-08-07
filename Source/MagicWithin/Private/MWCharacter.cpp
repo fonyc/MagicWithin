@@ -48,6 +48,8 @@ void AMWCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+
+	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &AMWCharacter::PrimaryAttack);
 }
 
 void AMWCharacter::MoveForward(const float Value)
@@ -69,4 +71,14 @@ void AMWCharacter::MoveRight(const float Value)
 
 	const FVector RightVector = FRotationMatrix(ControllerRotation).GetScaledAxis(EAxis::Y);
 	AddMovementInput(RightVector, Value);
+}
+
+void AMWCharacter::PrimaryAttack()
+{
+	const FTransform SpawnTransform = FTransform(GetControlRotation(),GetActorLocation());
+	
+	FActorSpawnParameters SpawnParameters;
+	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	
+	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTransform, SpawnParameters);
 }

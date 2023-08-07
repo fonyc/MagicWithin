@@ -14,6 +14,10 @@ class MAGICWITHIN_API AMWCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+protected:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> ProjectileClass; 
+
 public:
 	// Sets default values for this character's properties
 	AMWCharacter();
@@ -31,6 +35,7 @@ protected:
 
 	void MoveForward(const float Value);
 	void MoveRight(const float Value);
+	void PrimaryAttack();
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
