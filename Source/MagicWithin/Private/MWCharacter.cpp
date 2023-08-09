@@ -26,6 +26,7 @@ AMWCharacter::AMWCharacter()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	
 	bUseControllerRotationYaw = false;
+	AttackDelay = 0.2f;
 }
 
 // Called when the game starts or when spawned
@@ -79,7 +80,14 @@ void AMWCharacter::MoveRight(const float Value)
 
 void AMWCharacter::PrimaryAttack() 
 {
-    const FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+	PlayAnimMontage(AttackAnim);
+	
+	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &AMWCharacter::PrimaryAttack_TimeElapsed, AttackDelay);
+}
+
+void AMWCharacter::PrimaryAttack_TimeElapsed()
+{
+	const FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
 	const FTransform SpawnTransform = FTransform(GetControlRotation(),HandLocation);
 	
 	FActorSpawnParameters SpawnParameters;

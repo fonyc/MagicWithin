@@ -9,6 +9,7 @@
 class UMWInteractionComponent;
 class USpringArmComponent;
 class UCameraComponent;
+//class UAnimMontage;
 
 UCLASS()
 class MAGICWITHIN_API AMWCharacter : public ACharacter
@@ -16,9 +17,17 @@ class MAGICWITHIN_API AMWCharacter : public ACharacter
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<AActor> ProjectileClass; 
+	UPROPERTY(EditAnywhere, Category= "Attack")
+	TSubclassOf<AActor> ProjectileClass;
 
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	UAnimMontage* AttackAnim;
+
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	float AttackDelay;
+	
+	FTimerHandle TimerHandle_PrimaryAttack;
+	
 public:
 	// Sets default values for this character's properties
 	AMWCharacter();
@@ -40,6 +49,7 @@ protected:
 	void MoveForward(const float Value);
 	void MoveRight(const float Value);
 	void PrimaryAttack();
+	void PrimaryAttack_TimeElapsed();
 	void PrimaryInteract();
 public:
 	// Called every frame
