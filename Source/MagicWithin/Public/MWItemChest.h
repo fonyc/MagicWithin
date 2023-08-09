@@ -13,11 +13,12 @@ UCLASS()
 class MAGICWITHIN_API AMWItemChest : public AActor, public IMWGameplayInterface
 {
 	GENERATED_BODY()
+
 public:
+	virtual void Interact(APawn* InstigatorPawn) override;
+
 	UPROPERTY(EditAnywhere, meta = (ClampMin = "0.0", ClampMax = "150.0", UIMin = "0.0", UIMax = "150.0"))
 	float TargetPitch;
-	
-	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
 	
 protected:
 	

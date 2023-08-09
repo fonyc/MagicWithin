@@ -2,7 +2,7 @@
 
 
 #include "MWCharacter.h"
-
+#include "MWInteractionComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -21,6 +21,8 @@ AMWCharacter::AMWCharacter()
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
 
+	InteractionComponent = CreateDefaultSubobject<UMWInteractionComponent>(TEXT("InteractionComponent"));
+	
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	
 	bUseControllerRotationYaw = false;
@@ -50,6 +52,7 @@ void AMWCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &AMWCharacter::PrimaryAttack);
+	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &AMWCharacter::PrimaryInteract);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 }
 
@@ -74,7 +77,7 @@ void AMWCharacter::MoveRight(const float Value)
 	AddMovementInput(RightVector, Value);
 }
 
-void AMWCharacter::PrimaryAttack()
+void AMWCharacter::PrimaryAttack() 
 {
     const FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
 	const FTransform SpawnTransform = FTransform(GetControlRotation(),HandLocation);
@@ -83,4 +86,10 @@ void AMWCharacter::PrimaryAttack()
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	
 	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTransform, SpawnParameters);
+}
+
+void AMWCharacter::PrimaryInteract()
+{
+	if(!InteractionComponent) return;
+	InteractionComponent->PrimaryInteract();
 }

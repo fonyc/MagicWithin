@@ -4,7 +4,6 @@
 #include "MWMagicProjectile.h"
 
 #include "Components/SphereComponent.h"
-#include "EnvironmentQuery/EnvQueryTypes.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 

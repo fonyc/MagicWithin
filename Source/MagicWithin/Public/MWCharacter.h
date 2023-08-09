@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "MWCharacter.generated.h"
 
+class UMWInteractionComponent;
 class USpringArmComponent;
 class UCameraComponent;
 
@@ -29,6 +30,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* CameraComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	UMWInteractionComponent* InteractionComponent;
 	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -36,6 +40,7 @@ protected:
 	void MoveForward(const float Value);
 	void MoveRight(const float Value);
 	void PrimaryAttack();
+	void PrimaryInteract();
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

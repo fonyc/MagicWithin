@@ -2,14 +2,7 @@
 
 
 #include "MWItemChest.h"
-
 #include "Components/BoxComponent.h"
-
-
-void AMWItemChest::Interact_Implementation(APawn* InstigatorPawn)
-{
-	Pivot->SetRelativeRotation(FRotator(TargetPitch, 0, 0));
-}
 
 // Sets default values
 AMWItemChest::AMWItemChest()
@@ -30,6 +23,11 @@ AMWItemChest::AMWItemChest()
 	BoxComponent->SetCollisionProfileName(TEXT("Chest"));
 
 	TargetPitch = 110.0f;
+}
+
+void AMWItemChest::Interact(APawn* InstigatorPawn)
+{
+	UE_LOG(LogTemp, Warning, TEXT("ASDASD"));
 }
 
 // Called when the game starts or when spawned

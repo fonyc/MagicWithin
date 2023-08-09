@@ -22,6 +22,5 @@ class MAGICWITHIN_API IMWGameplayInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	UFUNCTION(BlueprintNativeEvent)
-	void Interact(APawn* InstigatorPawn);
+	virtual void Interact(APawn* InstigatorPawn) = 0;
 };
