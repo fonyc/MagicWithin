@@ -3,6 +3,7 @@
 
 #include "MWInteractionComponent.h"
 #include "MWGameplayInterface.h"
+#include "Framework/Text/ShapedTextCache.h"
 
 // Sets default values for this component's properties
 UMWInteractionComponent::UMWInteractionComponent()
@@ -12,6 +13,7 @@ UMWInteractionComponent::UMWInteractionComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	EyeSight = 1000.f;
+	VisionRadius = 30.f;
 }
 
 // Called when the game starts
@@ -32,32 +34,47 @@ void UMWInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType
 	// ...
 }
 
-void UMWInteractionComponent::PrimaryInteract() 
+void UMWInteractionComponent::PrimaryInteract()
 {
 	//The objects that the line trace is going to detect are World Dynamic, so make sure to set ECC_WorldDynamic to it 
 	FCollisionObjectQueryParams ObjectQueryParams;
 	ObjectQueryParams.AddObjectTypesToQuery(ECC_WorldDynamic);
 
 	AActor* Owner = GetOwner();
-	
+
 	FVector EyeLocation;
 	FVector EndLocation;
 	FRotator EyeRotation;
-	
+
 	Owner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
 	EndLocation = EyeLocation + EyeRotation.Vector() * EyeSight;
-	
-	FHitResult Hit;
-	bool bBlockedHit = GetWorld()->LineTraceSingleByObjectType(Hit, EyeLocation, EndLocation, ObjectQueryParams);
+
+	TArray<FHitResult> HitResults;
+
+	FCollisionShape VisionShape;
+	VisionShape.SetSphere(VisionRadius);
+
+	GetWorld()->SweepMultiByObjectType(HitResults, EyeLocation, EndLocation, FQuat::Identity, ObjectQueryParams,
+	                                   VisionShape);
+	const bool bBlockedHit = !HitResults.IsEmpty();
+
 	FColor LineTraceColor = bBlockedHit ? FColor::Orange : FColor::Red;
-	if(AActor* HitActor = Hit.GetActor())
+
+	for (FHitResult Hit : HitResults)
 	{
-		if (HitActor->Implements<UMWGameplayInterface>())
+		if (AActor* HitActor = Hit.GetActor())
 		{
-			LineTraceColor = FColor::Green;
-			APawn* OwnerPawn = Cast<APawn>(Owner);
-			IMWGameplayInterface::Execute_Interact(HitActor, OwnerPawn);
+			if (HitActor->Implements<UMWGameplayInterface>())
+			{
+				LineTraceColor = FColor::Green;
+				APawn* OwnerPawn = Cast<APawn>(Owner);
+				IMWGameplayInterface::Execute_Interact(HitActor, OwnerPawn);
+
+				DrawDebugLine(GetWorld(), EyeLocation, EndLocation, LineTraceColor, false, 2.0f, 0, 2.0f);
+				DrawDebugSphere(GetWorld(), Hit.ImpactPoint, VisionRadius, 32, LineTraceColor, false, 2.0f);
+				break;
+			}
 		}
 	}
-	DrawDebugLine(GetWorld(),EyeLocation,EndLocation, LineTraceColor, false, 2.0f,0,2.0f);
+	DrawDebugLine(GetWorld(), EyeLocation, EndLocation, LineTraceColor, false, 2.0f, 0, 2.0f);
 }
