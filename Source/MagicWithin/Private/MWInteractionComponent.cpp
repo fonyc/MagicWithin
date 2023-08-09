@@ -52,26 +52,12 @@ void UMWInteractionComponent::PrimaryInteract()
 	FColor LineTraceColor = bBlockedHit ? FColor::Orange : FColor::Red;
 	if(AActor* HitActor = Hit.GetActor())
 	{
-		if (IMWGameplayInterface* TheInterface = Cast<IMWGameplayInterface>(HitActor))
+		if (HitActor->Implements<UMWGameplayInterface>())
 		{
 			LineTraceColor = FColor::Green;
 			APawn* OwnerPawn = Cast<APawn>(Owner);
 			IMWGameplayInterface::Execute_Interact(HitActor, OwnerPawn);
 		}
-		
-		// if (HitActor->GetClass()->ImplementsInterface(UMWInteractionComponent::StaticClass()))
-		// {
-		// 	LineTraceColor = FColor::Green;
-		// 	APawn* OwnerPawn = Cast<APawn>(Owner);
-		// 	IMWGameplayInterface::Execute_Interact(HitActor, OwnerPawn);
-		// }
-		
-		// if (HitActor->Implements<UMWInteractionComponent>())
-		// {
-		// 	LineTraceColor = FColor::Green;
-		// 	APawn* OwnerPawn = Cast<APawn>(Owner);
-		// 	IMWGameplayInterface::Execute_Interact(HitActor, OwnerPawn);
-		// }
 	}
 	DrawDebugLine(GetWorld(),EyeLocation,EndLocation, LineTraceColor, false, 2.0f,0,2.0f);
 }
