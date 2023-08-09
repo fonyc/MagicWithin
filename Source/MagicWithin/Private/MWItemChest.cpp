@@ -27,7 +27,7 @@ AMWItemChest::AMWItemChest()
 
 void AMWItemChest::Interact_Implementation(APawn* InstigatorPawn)
 {
-	UE_LOG(LogTemp, Warning, TEXT("ASDASD"));
+	Pivot->SetRelativeRotation(FRotator(0,0, TargetPitch));
 }
 
 // Called when the game starts or when spawned
