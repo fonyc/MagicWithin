@@ -25,7 +25,7 @@ AMWItemChest::AMWItemChest()
 	TargetPitch = 110.0f;
 }
 
-void AMWItemChest::Interact(APawn* InstigatorPawn)
+void AMWItemChest::Interact_Implementation(APawn* InstigatorPawn)
 {
 	UE_LOG(LogTemp, Warning, TEXT("ASDASD"));
 }
