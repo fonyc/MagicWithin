@@ -22,7 +22,7 @@ AMWItemChest::AMWItemChest()
 	BoxComponent->SetupAttachment(BaseMesh);
 	BoxComponent->SetCollisionProfileName(TEXT("Chest"));
 
-	TargetPitch = 110.0f;
+	TargetPitch = -110.0f;
 }
 
 void AMWItemChest::Interact_Implementation(APawn* InstigatorPawn)

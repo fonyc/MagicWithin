@@ -17,7 +17,7 @@ class MAGICWITHIN_API AMWItemChest : public AActor, public IMWGameplayInterface
 public:
 	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
 
-	UPROPERTY(EditAnywhere, meta = (ClampMin = "0.0", ClampMax = "150.0", UIMin = "0.0", UIMax = "150.0"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = "0.0", ClampMax = "150.0", UIMin = "0.0", UIMax = "150.0"))
 	float TargetPitch;
 
 protected:
