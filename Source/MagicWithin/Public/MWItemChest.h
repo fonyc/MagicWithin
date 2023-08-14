@@ -27,7 +27,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* LidMesh;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	USceneComponent* Pivot;
 
 	UPROPERTY(EditAnywhere)
