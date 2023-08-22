@@ -34,7 +34,7 @@ protected:
 	UFUNCTION()
 	void OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherACtor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 	
-	virtual void BeginPlay() override;
+	virtual void PostInitializeComponents() override;
 
 public:
 	// Called every frame

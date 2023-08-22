@@ -3,17 +3,12 @@
 
 #include "MWExplosiveBarrel.h"
 
-#include "Components/BoxComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
 
 
 // Sets default values
 AMWExplosiveBarrel::AMWExplosiveBarrel()
 {
-	// BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
-	// BoxCollider->SetSimulatePhysics(true);
-	// RootComponent = BoxCollider;
-	
 	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BaseMesh"));
 	RootComponent = BaseMesh;
 	
@@ -40,9 +35,9 @@ void AMWExplosiveBarrel::OnActorHit(UPrimitiveComponent* HitComponent, AActor* O
 }
 
 // Called when the game starts or when spawned
-void AMWExplosiveBarrel::BeginPlay()
+void AMWExplosiveBarrel::PostInitializeComponents()
 {
-	Super::BeginPlay();
+	Super::PostInitializeComponents();
 
 	//BINDING OnComponent hit from mesh to our custom UFunction
 	BaseMesh->OnComponentHit.AddDynamic(this, &AMWExplosiveBarrel::OnActorHit);

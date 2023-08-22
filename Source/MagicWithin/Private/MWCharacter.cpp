@@ -17,6 +17,8 @@ AMWCharacter::AMWCharacter()
 	SpringArmComponent->SetupAttachment(RootComponent);
 	
 	SpringArmComponent->bUsePawnControlRotation = true;
+	SpringArmComponent->SocketOffset = FVector(0,90.0f,0);
+	SpringArmComponent->TargetArmLength = 300.0f;
 	
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
