@@ -16,6 +16,9 @@ class MAGICWITHIN_API AMWMagicProjectile : public AActor
 	GENERATED_BODY()
 
 public:
+	UFUNCTION()
+	void OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
 	AMWMagicProjectile();
 
 protected:

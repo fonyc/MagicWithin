@@ -2,6 +2,8 @@
 
 
 #include "MWCharacter.h"
+
+#include "MWAttributeComponent.h"
 #include "MWInteractionComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -24,6 +26,8 @@ AMWCharacter::AMWCharacter()
 	CameraComponent->SetupAttachment(SpringArmComponent);
 
 	InteractionComponent = CreateDefaultSubobject<UMWInteractionComponent>(TEXT("InteractionComponent"));
+
+	AttributeComponent = CreateDefaultSubobject<UMWAttributeComponent>(TEXT("AttributeComponent"));
 	
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	

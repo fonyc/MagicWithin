@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "MWCharacter.generated.h"
 
+class UMWAttributeComponent;
 class UMWInteractionComponent;
 class USpringArmComponent;
 class UCameraComponent;
@@ -25,6 +26,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Attack")
 	float AttackDelay;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Attributes")
+	UMWAttributeComponent* AttributeComponent;
 	
 	FTimerHandle TimerHandle_PrimaryAttack;
 	
