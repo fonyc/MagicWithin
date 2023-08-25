@@ -14,11 +14,17 @@ void AMWMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent
                                         const FHitResult& SweepResult)
 {
 	if (OtherActor == nullptr) return;
-	if(UMWAttributeComponent* AttributeComponent = Cast<UMWAttributeComponent>(OtherActor->GetComponentByClass(UMWAttributeComponent::StaticClass())))
+	if (UMWAttributeComponent* AttributeComponent = Cast<UMWAttributeComponent>(
+		OtherActor->GetComponentByClass(UMWAttributeComponent::StaticClass())))
 	{
 		AttributeComponent->ApplyHealthChange(-20.0f);
 		Destroy();
 	}
+}
+
+void AMWMagicProjectile::OnTimeToLiveEnded()
+{
+	Destroy();
 }
 
 // Sets default values
@@ -45,6 +51,7 @@ AMWMagicProjectile::AMWMagicProjectile()
 void AMWMagicProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+	GetWorldTimerManager().SetTimer(TimerHandle_DestroySelf, this, &AMWMagicProjectile::OnTimeToLiveEnded, 1.0f, false);
 }
 
 // Called every frame
