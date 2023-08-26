@@ -32,6 +32,7 @@ void AMWExplosiveBarrel::OnActorHit(UPrimitiveComponent* HitComponent, AActor* O
 	UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
 	ForceComponent->FireImpulse();
+	Destroy();
 }
 
 // Called when the game starts or when spawned

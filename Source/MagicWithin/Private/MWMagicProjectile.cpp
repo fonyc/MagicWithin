@@ -45,13 +45,15 @@ AMWMagicProjectile::AMWMagicProjectile()
 	MovementComponent->InitialSpeed = 1000.f;
 	MovementComponent->bRotationFollowsVelocity = true;
 	MovementComponent->bInitialVelocityInLocalSpace = true;
+
+	TTL = 1.0f;
 }
 
 // Called when the game starts or when spawned
 void AMWMagicProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	GetWorldTimerManager().SetTimer(TimerHandle_DestroySelf, this, &AMWMagicProjectile::OnTimeToLiveEnded, 1.0f, false);
+	GetWorldTimerManager().SetTimer(TimerHandle_DestroySelf, this, &AMWMagicProjectile::OnTimeToLiveEnded, TTL, false);
 }
 
 // Called every frame

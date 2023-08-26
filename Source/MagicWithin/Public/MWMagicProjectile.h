@@ -28,6 +28,9 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ProjectilePhysics, meta = (AllowPrivateAccess = "true"))
 	USphereComponent* SphereComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ProjectileSettings, meta = (AllowPrivateAccess = "true"))
+	float TTL;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ProjectilePhysics, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* MovementComponent;
