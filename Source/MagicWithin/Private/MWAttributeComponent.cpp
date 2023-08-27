@@ -14,5 +14,9 @@ bool UMWAttributeComponent::ApplyHealthChange(float Delta)
 {
 	Health += Delta;
 	OnHealthChanged.Broadcast(nullptr, this, Health, Delta);
+	if(Health >= 0)
+	{
+		//OnHealthZero.Broadcast(nullptr, this);
+	}
 	return true;
 }

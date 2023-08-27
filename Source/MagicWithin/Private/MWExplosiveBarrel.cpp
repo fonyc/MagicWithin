@@ -3,6 +3,7 @@
 
 #include "MWExplosiveBarrel.h"
 
+#include "MWAttributeComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
 
 
@@ -11,6 +12,8 @@ AMWExplosiveBarrel::AMWExplosiveBarrel()
 {
 	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BaseMesh"));
 	RootComponent = BaseMesh;
+
+	AttributeComponent = CreateDefaultSubobject<UMWAttributeComponent>(TEXT("AttributeComponent"));
 	
 	ForceComponent = CreateDefaultSubobject<URadialForceComponent>(TEXT("ForceComponent"));
 	ForceComponent->SetupAttachment(RootComponent);
@@ -31,11 +34,14 @@ AMWExplosiveBarrel::AMWExplosiveBarrel()
 void AMWExplosiveBarrel::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherACtor,
 	UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	ForceComponent->FireImpulse();
-	Destroy();
+	AttributeComponent->ApplyHealthChange(-20.0f);
+	if(AttributeComponent->HealZeroOrLess())
+	{
+		ForceComponent->FireImpulse();
+		Destroy();
+	}
 }
 
-// Called when the game starts or when spawned
 void AMWExplosiveBarrel::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();

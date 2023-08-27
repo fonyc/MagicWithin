@@ -6,7 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "MWAttributeComponent.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnHealthChanged, AActor*, InstigatorActor, UMWAttributeComponent*, OwningComponent, float, NewHealth, float, Delta);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnHealthChanged, AActor*, InstigatorActor, UMWAttributeComponent*,
+                                              OwningComponent, float, NewHealth, float, Delta);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class MAGICWITHIN_API UMWAttributeComponent : public UActorComponent
@@ -19,12 +20,17 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attributes")
-	float Health;	
+	float Health;
+
+
 
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged OnHealthChanged;
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Attributes")
 	bool ApplyHealthChange(float Delta);
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE bool HealZeroOrLess() const { return Health <= 0; }
 };

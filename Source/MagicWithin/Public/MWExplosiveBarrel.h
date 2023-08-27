@@ -8,6 +8,7 @@
 
 class URadialForceComponent;
 class UBoxComponent;
+class UMWAttributeComponent;
 
 UCLASS()
 class MAGICWITHIN_API AMWExplosiveBarrel : public AActor
@@ -19,6 +20,9 @@ public:
 	AMWExplosiveBarrel();
 
 protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Attributes")
+	UMWAttributeComponent* AttributeComponent;
+	
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* BaseMesh;
 
