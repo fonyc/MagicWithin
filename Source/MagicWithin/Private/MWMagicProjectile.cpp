@@ -14,6 +14,7 @@ void AMWMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent
                                         const FHitResult& SweepResult)
 {
 	if (OtherActor == nullptr) return;
+	if (OtherActor == GetInstigator()) return;
 	if (UMWAttributeComponent* AttributeComponent = Cast<UMWAttributeComponent>(
 		OtherActor->GetComponentByClass(UMWAttributeComponent::StaticClass())))
 	{
