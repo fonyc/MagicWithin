@@ -10,7 +10,7 @@ class USphereComponent;
 class UParticleSystemComponent;
 class UProjectileMovementComponent;
 
-UCLASS(Abstract)
+UCLASS()
 class MAGICWITHIN_API AMWProjectileBase : public AActor
 {
 	GENERATED_BODY()
@@ -26,7 +26,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ProjectilePhysics, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* MovementComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = VFX, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, Category = VFX, meta = (AllowPrivateAccess = "true"))
 	UParticleSystemComponent* ParticleSystemComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = VFX, meta = (AllowPrivateAccess = "true"))

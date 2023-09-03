@@ -10,7 +10,6 @@ class UMWAttributeComponent;
 class UMWInteractionComponent;
 class USpringArmComponent;
 class UCameraComponent;
-//class UAnimMontage;
 
 UCLASS()
 class MAGICWITHIN_API AMWCharacter : public ACharacter
@@ -20,6 +19,9 @@ class MAGICWITHIN_API AMWCharacter : public ACharacter
 protected:
 	UPROPERTY(EditAnywhere, Category= "Attack")
 	TSubclassOf<AActor> ProjectileClass;
+
+	UPROPERTY(EditAnywhere, Category= "Attack")
+	TSubclassOf<AActor> DashProjectileClass;
 
 	UPROPERTY(EditAnywhere, Category = "Attack")
 	UAnimMontage* AttackAnim;
@@ -31,6 +33,7 @@ protected:
 	UMWAttributeComponent* AttributeComponent;
 	
 	FTimerHandle TimerHandle_PrimaryAttack;
+	FTimerHandle TimerHandle_SecondaryAttack;
 	
 public:
 	// Sets default values for this character's properties
@@ -54,7 +57,10 @@ protected:
 	void MoveRight(const float Value);
 	void PrimaryAttack();
 	void PrimaryAttack_TimeElapsed();
+	void SecondaryAttack();
+	void SecondaryAttack_TimeElapsed();
 	void PrimaryInteract();
+	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

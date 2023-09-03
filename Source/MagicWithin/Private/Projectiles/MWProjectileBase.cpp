@@ -1,5 +1,5 @@
-﻿
-#include "Projectiles/MWProjectileBase.h"
+﻿#include "Projectiles/MWProjectileBase.h"
+
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -7,38 +7,33 @@
 
 void AMWProjectileBase::Explode_Implementation()
 {
-	if (ensure(IsValid(this) && ImpactVFX))
+	if (IsValid(this) && ImpactVFX)
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactVFX, GetActorLocation(), GetActorRotation());
+		Destroy();
 	}
 }
 
 void AMWProjectileBase::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
                                    UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	//Add possible force against the other actor
-	// if (OtherActor != this && OtherComp->IsSimulatingPhysics())
-	// {
-	// 	OtherComp->AddImpulseAtLocation(MovementComponent->Velocity * 100.0f, Hit.ImpactPoint);
-	// }
-	
+	if (OtherActor == nullptr) return;
+	if (OtherActor == GetInstigator()) return;
+
 	Explode();
 }
 
 // Sets default values
 AMWProjectileBase::AMWProjectileBase()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 	SphereComponent->SetSphereRadius(3.0f);
-	SphereComponent->SetCollisionProfileName(TEXT("MagicProjectile"));
+	SphereComponent->SetCollisionProfileName(TEXT("Projectile"));
 	SphereComponent->OnComponentHit.AddDynamic(this, &AMWProjectileBase::OnActorHit);
 	RootComponent = SphereComponent;
 
 	ParticleSystemComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ParticleSystemComp"));
-	ParticleSystemComponent->SetupAttachment(SphereComponent);
+	ParticleSystemComponent->SetupAttachment(RootComponent);
 
 	MovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
 	MovementComponent->InitialSpeed = 1000.f;
@@ -52,7 +47,6 @@ AMWProjectileBase::AMWProjectileBase()
 void AMWProjectileBase::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
-	//Made projectile to ignore its caster
+	
 	SphereComponent->IgnoreActorWhenMoving(GetInstigator(), true);
 }
