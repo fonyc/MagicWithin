@@ -19,14 +19,13 @@ void ADashProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	DrawDebugSphere(GetWorld(), GetActorLocation(),20.0f,32,FColor::Blue,1.0f);
-	
+	//DrawDebugSphere(GetWorld(), GetActorLocation(),20.0f,32,FColor::Blue,1.0f);
 	GetWorldTimerManager().SetTimer(TimerHandle_DelayedDetonate, this, &ADashProjectile::Explode, DetonateDelay);
 }
 
 void ADashProjectile::Explode_Implementation()
 {
-	DrawDebugSphere(GetWorld(), GetActorLocation(),20.0f,32,FColor::Red, 1.0f);
+	//DrawDebugSphere(GetWorld(), GetActorLocation(),20.0f,32,FColor::Red, 1.0f);
 	
 	//Clear timer in case the detonation is called through OnACtorHit
 	GetWorldTimerManager().ClearTimer(TimerHandle_DelayedDetonate);

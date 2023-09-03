@@ -8,7 +8,6 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Kismet/KismetSystemLibrary.h"
 
 // Sets default values
 AMWCharacter::AMWCharacter()
@@ -156,6 +155,4 @@ void AMWCharacter::SpawnProjectile(TSubclassOf<AActor> ClassToSpawn)
 	FTransform SpawnTransform = FTransform(Rotation, HandLocation);
 
 	GetWorld()->SpawnActor<AActor>(ClassToSpawn, SpawnTransform, SpawnParams);
-
-	DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Green, true);
 }
