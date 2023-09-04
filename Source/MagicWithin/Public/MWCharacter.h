@@ -23,6 +23,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category= "Attack")
 	TSubclassOf<AActor> DashProjectileClass;
 
+	UPROPERTY(EditAnywhere, Category= "Attack")
+	TSubclassOf<AActor> UltimateProjectileClass;
+
 	UPROPERTY(EditAnywhere, Category = "Attack")
 	UAnimMontage* AttackAnim;
 
@@ -34,6 +37,7 @@ protected:
 	
 	FTimerHandle TimerHandle_PrimaryAttack;
 	FTimerHandle TimerHandle_SecondaryAttack;
+	FTimerHandle TimerHandle_UltimateAttack;
 	
 public:
 	// Sets default values for this character's properties
@@ -59,6 +63,8 @@ protected:
 	void PrimaryAttack_TimeElapsed();
 	void SecondaryAttack();
 	void SecondaryAttack_TimeElapsed();
+	void UltimateAttack();
+	void UltimateAttack_TimeElapsed();
 	void PrimaryInteract();
 	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
 public:

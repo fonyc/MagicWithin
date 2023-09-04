@@ -23,7 +23,6 @@ void AMWProjectileBase::OnActorHit(UPrimitiveComponent* HitComponent, AActor* Ot
 	Explode();
 }
 
-// Sets default values
 AMWProjectileBase::AMWProjectileBase()
 {
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));

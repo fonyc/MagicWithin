@@ -60,6 +60,7 @@ void AMWCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &AMWCharacter::PrimaryAttack);
 	PlayerInputComponent->BindAction("SecondaryAttack", IE_Pressed, this, &AMWCharacter::SecondaryAttack);
+	PlayerInputComponent->BindAction("UltimateAttack", IE_Pressed, this, &AMWCharacter::UltimateAttack);
 	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &AMWCharacter::PrimaryInteract);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 }
@@ -109,6 +110,20 @@ void AMWCharacter::SecondaryAttack()
 void AMWCharacter::SecondaryAttack_TimeElapsed()
 {
 	SpawnProjectile(DashProjectileClass);
+}
+
+void AMWCharacter::UltimateAttack()
+{
+	PlayAnimMontage(AttackAnim);
+
+	GetWorldTimerManager().SetTimer(TimerHandle_UltimateAttack, this, &AMWCharacter::UltimateAttack_TimeElapsed,
+									AttackDelay);
+}
+
+void AMWCharacter::UltimateAttack_TimeElapsed()
+{
+	if(!UltimateProjectileClass) return;
+	SpawnProjectile(UltimateProjectileClass);
 }
 
 void AMWCharacter::PrimaryInteract()
