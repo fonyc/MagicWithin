@@ -23,7 +23,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = ProjectileSettings, meta = (AllowPrivateAccess = "true"))
 	float TimeToLive;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Attack, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, meta = (AllowPrivateAccess = "true"))
 	float BaseDamage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ProjectilePhysics, meta = (AllowPrivateAccess = "true"))
