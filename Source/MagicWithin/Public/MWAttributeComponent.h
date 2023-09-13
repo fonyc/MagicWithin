@@ -22,8 +22,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attributes")
 	float Health;
 
-
-
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged OnHealthChanged;
@@ -32,5 +30,5 @@ public:
 	bool ApplyHealthChange(float Delta);
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE bool HealZeroOrLess() const { return Health <= 0; }
+	bool IsAlive() const { return Health > 0.0f; }
 };

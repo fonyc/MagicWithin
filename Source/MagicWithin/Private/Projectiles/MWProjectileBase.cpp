@@ -1,5 +1,6 @@
 ﻿#include "Projectiles/MWProjectileBase.h"
 
+#include "MWAttributeComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -19,6 +20,13 @@ void AMWProjectileBase::OnActorHit(UPrimitiveComponent* HitComponent, AActor* Ot
 {
 	if (OtherActor == nullptr) return;
 	if (OtherActor == GetInstigator()) return;
+
+	//Add damage to all Base projectiles
+	if (UMWAttributeComponent* AttributeComponent = Cast<UMWAttributeComponent>(
+		OtherActor->GetComponentByClass(UMWAttributeComponent::StaticClass())))
+	{
+		AttributeComponent->ApplyHealthChange(-BaseDamage);
+	}
 
 	Explode();
 }
@@ -41,6 +49,7 @@ AMWProjectileBase::AMWProjectileBase()
 	MovementComponent->ProjectileGravityScale = 0.0f;
 
 	TimeToLive = 1.0f;
+	BaseDamage = 20.0f;
 }
 
 void AMWProjectileBase::PostInitializeComponents()

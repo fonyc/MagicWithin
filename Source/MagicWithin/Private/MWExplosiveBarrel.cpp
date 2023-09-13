@@ -35,7 +35,7 @@ void AMWExplosiveBarrel::OnActorHit(UPrimitiveComponent* HitComponent, AActor* O
 	UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
 	AttributeComponent->ApplyHealthChange(-20.0f);
-	if(AttributeComponent->HealZeroOrLess())
+	if(AttributeComponent->IsAlive())
 	{
 		ForceComponent->FireImpulse();
 		Destroy();
