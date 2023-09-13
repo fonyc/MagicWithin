@@ -47,6 +47,12 @@ void AMWCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+void AMWCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	AttributeComponent->OnHealthChanged.AddDynamic(this, &AMWCharacter::OnHealthChanged);
+}
+
 // Called to bind functionality to input
 void AMWCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -117,12 +123,12 @@ void AMWCharacter::UltimateAttack()
 	PlayAnimMontage(AttackAnim);
 
 	GetWorldTimerManager().SetTimer(TimerHandle_UltimateAttack, this, &AMWCharacter::UltimateAttack_TimeElapsed,
-									AttackDelay);
+	                                AttackDelay);
 }
 
 void AMWCharacter::UltimateAttack_TimeElapsed()
 {
-	if(!UltimateProjectileClass) return;
+	if (!UltimateProjectileClass) return;
 	SpawnProjectile(UltimateProjectileClass);
 }
 
@@ -170,4 +176,16 @@ void AMWCharacter::SpawnProjectile(TSubclassOf<AActor> ClassToSpawn)
 	FTransform SpawnTransform = FTransform(Rotation, HandLocation);
 
 	GetWorld()->SpawnActor<AActor>(ClassToSpawn, SpawnTransform, SpawnParams);
+}
+
+void AMWCharacter::OnHealthChanged(AActor* InstigatorActor, UMWAttributeComponent* OwningComponent, float NewHealth,
+                                   float Delta)
+{
+	if(NewHealth <= 0)
+	{
+		if(APlayerController* PC = Cast<APlayerController>(GetController()))
+		{
+			DisableInput(PC);
+		} 
+	}
 }

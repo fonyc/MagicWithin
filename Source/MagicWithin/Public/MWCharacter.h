@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "MWAttributeComponent.h"
 #include "GameFramework/Character.h"
 #include "MWCharacter.generated.h"
 
@@ -67,10 +68,12 @@ protected:
 	void UltimateAttack_TimeElapsed();
 	void PrimaryInteract();
 	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
+	UFUNCTION()
+	void OnHealthChanged(AActor* InstigatorActor, UMWAttributeComponent* OwningComponent, float NewHealth, float Delta);
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	virtual void PostInitializeComponents() override;
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 };

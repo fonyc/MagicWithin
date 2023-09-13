@@ -30,5 +30,5 @@ public:
 	bool ApplyHealthChange(float Delta);
 
 	UFUNCTION(BlueprintCallable)
-	bool IsAlive() const { return Health > 0.0f; }
+	FORCEINLINE bool IsAlive() const { return Health > 0.0f; }
 };
