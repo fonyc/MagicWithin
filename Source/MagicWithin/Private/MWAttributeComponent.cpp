@@ -14,9 +14,10 @@ bool UMWAttributeComponent::ApplyHealthChange(float Delta)
 {
 	Health += Delta;
 	OnHealthChanged.Broadcast(nullptr, this, Health, Delta);
-	if(Health >= 0)
+	if(Health <= 0)
 	{
-		//OnHealthZero.Broadcast(nullptr, this);
+		//Tell whoever need to know that the entity is dead
+		OnHealthReachZero.Broadcast(nullptr, this, Health, Delta);
 	}
 	return true;
 }

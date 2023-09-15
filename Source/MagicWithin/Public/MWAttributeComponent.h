@@ -9,6 +9,9 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnHealthChanged, AActor*, InstigatorActor, UMWAttributeComponent*,
                                               OwningComponent, float, NewHealth, float, Delta);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnHealthReachZero, AActor*, InstigatorActor, UMWAttributeComponent*,
+											  OwningComponent, float, NewHealth, float, Delta);
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class MAGICWITHIN_API UMWAttributeComponent : public UActorComponent
 {
@@ -25,6 +28,9 @@ protected:
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged OnHealthChanged;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnHealthReachZero OnHealthReachZero;
 
 	UFUNCTION(BlueprintCallable, Category = "Attributes")
 	bool ApplyHealthChange(float Delta);
